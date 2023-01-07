@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猜数字游戏</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        height:100vh;
+        background-image: linear-gradient(to bottom right,#4bc0c8,#c779d0,#feac5e);
+      }
+
+      .zong {
+        height: 500px;
+        width: 50%;
+        background-color: #eee;
+        border-radius: 10px;
+        border: 1px solid rgb(65, 64, 64);
+      }
+
+      .welcome {
+        height: 50px;
+        background-color: yellow;
+        font-size: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
+      .shuru {
+        height: 100px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      .shuru input {
+        height: 75%;
+        width: 75%;
+        font-size: 30px;
+        margin-left: 15px;
+        border-radius: 5px;
+      }
+
+      .shuru button {
+        width: 20%;
+        height: 75%;
+        border-radius: 5px;
+      }
+
+      .shuru button:hover {
+        background-color: rgb(220, 220, 220);
+      }
+
+      .tishi {
+        height: 50px;
+        border: 1px solid black;
+        margin-left: 15px;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+      }
+
+      .kaishi {
+        height: 25px;
+      }
+
+      .kaishi button {
+        border-radius: 3px;
+      }
+
+      .kaishi button:hover {
+        background-color: rgb(220, 220, 220);
+      }
+
+      .youxiguize {
+        border: 2px solid black;
+        border-radius: 3px;
+      }
+
+      .youxiguize:hover {
+        background-color: rgb(220, 220, 220);
+      }
+
+      .guize {
+        height: 100px;
+        display: none;
+      }
+      .pointer {
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      let y = 2;
+      let num;
+      let i;
+      let cishu;
+      function en() {
+        let enr;
+        enr = document.getElementById("shuru");
+        enr.addEventListener("keyup", function (event) {
+          event.preventDefault();
+          if (event.keyCode === 13) {
+            document.getElementById("bo").click();
+          }
+        });
+      }
+      function randomNum(minNum, maxNum) {
+        switch (arguments.length) {
+          case 1:
+            return parseInt(Math.random() * minNum + 1, 10);
+            break;
+          case 2:
+            return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+            break;
+          default:
+            return 0;
+            break;
+        }
+      }
+      function kaishi() {
+        cishu = 5;
+        cishu1 = 6;
+        i = randomNum(1, 100);
+        let tu = "提示：游戏开始了";
+        let to = "重新游戏";
+        document.getElementById("TiShi").innerHTML = tu;
+        document.getElementById("start").innerHTML = to;
+      }
+      function gui() {
+        let x;
+        let m = document.getElementById("GuiZe");
+        if (y % 2 == 0) {
+          x = "游戏规则 &#8743";
+          y = y - 1;
+          document.getElementById("youxiguize").innerHTML = x;
+          m.style.display = "flex";
+        } else {
+          x = "游戏规则 &#8744";
+          y = y + 1;
+          document.getElementById("youxiguize").innerHTML = x;
+          m.style.display = "none";
+        }
+      }
+      function huoqu() {
+        let a = document.getElementById("shuru").value;
+        num = +a;
+      }
+      function tijiao() {
+        let ty;
+        let dele;
+        if (!num || num > 100 || num < 1) {
+          ty = "提示：请输入1到100的数字";
+          document.getElementById("TiShi").innerHTML = ty;
+          dele = document.getElementById("shuru");
+          dele.value = "";
+        } else {
+          if (cishu1 !== 1 || num == i) {
+            if (num == i) {
+              ty = "提示：猜对啦！";
+              document.getElementById("TiShi").innerHTML = ty;
+              dele = document.getElementById("shuru");
+              dele.value = "";
+            } else if (num < i) {
+              ty = `提示：${num}太小了 还有${cishu}次机会`;
+              document.getElementById("TiShi").innerHTML = ty;
+              dele = document.getElementById("shuru");
+              dele.value = "";
+              cishu1 = cishu1 - 1;
+              cishu = cishu - 1;
+            } else if (num > i) {
+              ty = `提示：${num}太大了 还有${cishu}次机会`;
+              document.getElementById("TiShi").innerHTML = ty;
+              dele = document.getElementById("shuru");
+              dele.value = "";
+              cishu1 = cishu1 - 1;
+              cishu = cishu - 1;
+            }
+          } else {
+            ty = "提示：啊偶，次数用完了，再来一次吧";
+            document.getElementById("TiShi").innerHTML = ty;
+            dele = document.getElementById("shuru");
+            dele.value = "";
+          }
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="zong">
+      <div class="welcome">欢迎来到猜数字游戏</div>
+      <div class="shuru">
+        <input type="text" value="" id="shuru" onclick="en()" /><button
+          onclick="huoqu();tijiao()"
+          ;
+          class="pointer"
+          id="bo"
+        >
+          提交
+        </button>
+      </div>
+      <div id="TiShi" class="tishi">提示:</div>
+      <div class="kaishi" style="display: flex; justify-content: space-around">
+        <div>
+          <button id="start" onclick="kaishi()" class="pointer">
+            开始游戏
+          </button>
+        </div>
+        <div id="youxiguize" class="youxiguize pointer" onclick="gui()">
+          游戏规则 &#8744
+        </div>
+      </div>
+      <div id="GuiZe" class="guize">
+        <p>
+          游戏开始后，系统将随机生成1到100（包含1和100）之间的一个数字，玩家在上方输入框输入一个数字并点击提交按钮，随后系统提示玩家该数字偏大或是偏小，玩家根据提示更改数字并提交，然后重复，玩家有6次机会来猜，若最后一次还是猜错，则系统提示错误。
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
