@@ -12,7 +12,12 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-image:linear-gradient(to top left,#4bc0c8,#c779d0,#feac5e)
+        background-image: linear-gradient(
+          to top left,
+          #4bc0c8,
+          #c779d0,
+          #feac5e
+        );
       }
       .flee {
         display: flex;
@@ -34,11 +39,13 @@
       .huadong:hover {
         transform: scale(0.95);
       }
-      .suiji {
-        background-color: antiquewhite;
+      .antiquewhite{
+        background-color:antiquewhite;
       }
     </style>
     <script>
+      let a,n=1;
+      let Idnumber = document.getElementsByClassName("huadong");
       function randomNum(minNum, maxNum) {
         switch (arguments.length) {
           case 1:
@@ -52,92 +59,56 @@
             break;
         }
       }
-      let n = 1;
-      function genhuan() {
+      function changeblock() {
+        let i = randomNum(0, 8);
+        Idnumber[i].classList.add("antiquewhite");
+      }
+      function restoreblock(ID) {
+        let x;
+        x = document.getElementById(ID).classList.contains("antiquewhite");
+        if (x) {
+          document.getElementById(ID).classList.remove("antiquewhite");
+          changeblock();
+        } else {
+          alert("点错了");
+        }
+      }
+      function gameover() {
         let y;
         if (n % 2 == 0) {
           y = "开始游戏";
           n = n - 1;
           for (m = 1; m <= 9; m++) {
-            let w = document.getElementById(m).classList.contains("suiji");
+            let w = document.getElementById(m).classList.contains("antiquewhite");
             if (w) {
-              document.getElementById(m).classList.remove("suiji");
+              document.getElementById(m).classList.remove("antiquewhite");
             }
           }
         } else {
           y = "结束游戏";
           n = n + 1;
-          suiyi();
+          changeblock();
         }
         document.getElementById("button").innerHTML = y;
-      }
-      let IDnumber;
-      function seekID1() {
-        IDnumber = 1;
-      }
-      function seekID2() {
-        IDnumber = 2;
-      }
-      function seekID3() {
-        IDnumber = 3;
-      }
-      function seekID4() {
-        IDnumber = 4;
-      }
-      function seekID5() {
-        IDnumber = 5;
-      }
-      function seekID6() {
-        IDnumber = 6;
-      }
-      function seekID7() {
-        IDnumber = 7;
-      }
-      function seekID8() {
-        IDnumber = 8;
-      }
-      function seekID9() {
-        IDnumber = 9;
-      }
-      let I;
-      function suiyi() {
-        let i;
-        i = randomNum(1, 9);
-        if (i == I) {
-          suiyi();
-        } else {
-          document.getElementById(i).classList.add("suiji");
-        }
-        I = i;
-      }
-      function kuai() {
-        let x;
-        x = document.getElementById(IDnumber).classList.contains("suiji");
-        if (x) {
-          document.getElementById(IDnumber).classList.remove("suiji");
-          suiyi();
-        } else {
-          alert("点错了");
-        }
       }
     </script>
   </head>
   <body>
     <div class="flee" style="display: flex; align-items: center">
-      <div id="1" class="huadong" onclick="seekID1();kuai()"></div>
-      <div id="2" class="huadong" onclick="seekID2();kuai()"></div>
-      <div id="3" class="huadong" onclick="seekID3();kuai()"></div>
-      <div id="4" class="huadong" onclick="seekID4();kuai()"></div>
-      <div id="5" class="huadong" onclick="seekID5();kuai()"></div>
-      <div id="6" class="huadong" onclick="seekID6();kuai()"></div>
-      <div id="7" class="huadong" onclick="seekID7();kuai()"></div>
-      <div id="8" class="huadong" onclick="seekID8();kuai()"></div>
-      <div id="9" class="huadong" onclick="seekID9();kuai()"></div>
+      <div id="1" class="huadong" onclick="restoreblock('1')"></div>
+      <div id="2" class="huadong" onclick="restoreblock('2')"></div>
+      <div id="3" class="huadong" onclick="restoreblock('3')"></div>
+      <div id="4" class="huadong" onclick="restoreblock('4')"></div>
+      <div id="5" class="huadong" onclick="restoreblock('5')"></div>
+      <div id="6" class="huadong" onclick="restoreblock('6')"></div>
+      <div id="7" class="huadong" onclick="restoreblock('7')"></div>
+      <div id="8" class="huadong" onclick="restoreblock('8')"></div>
+      <div id="9" class="huadong" onclick="restoreblock('9')"></div>
     </div>
     <div style="margin: 10px">
       <button
         id="button"
-        onclick="genhuan()"
+        onclick="gameover()"
         style="width: 100px; height: 50px"
       >
         开始游戏
