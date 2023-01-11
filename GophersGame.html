@@ -39,12 +39,14 @@
       .huadong:hover {
         transform: scale(0.95);
       }
-      .antiquewhite{
-        background-color:antiquewhite;
+      .antiquewhite {
+        background-color: antiquewhite;
       }
     </style>
     <script>
-      let a,n=1;
+      let a,
+        n = 1,
+        j = 0;
       let Idnumber = document.getElementsByClassName("huadong");
       function randomNum(minNum, maxNum) {
         switch (arguments.length) {
@@ -62,24 +64,30 @@
       function changeblock() {
         let i = randomNum(0, 8);
         Idnumber[i].classList.add("antiquewhite");
+        j = 1;
       }
       function restoreblock(ID) {
-        let x;
-        x = document.getElementById(ID).classList.contains("antiquewhite");
-        if (x) {
-          document.getElementById(ID).classList.remove("antiquewhite");
-          changeblock();
-        } else {
-          alert("点错了");
-        }
+        if (j) {
+          let x;
+          x = document.getElementById(ID).classList.contains("antiquewhite");
+          if (x) {
+            document.getElementById(ID).classList.remove("antiquewhite");
+            changeblock();
+          } else {
+            alert("点错了");
+          }
+        } else alert("点击开始游戏");
       }
       function gameover() {
         let y;
         if (n % 2 == 0) {
           y = "开始游戏";
           n = n - 1;
+          j = 0;
           for (m = 1; m <= 9; m++) {
-            let w = document.getElementById(m).classList.contains("antiquewhite");
+            let w = document
+              .getElementById(m)
+              .classList.contains("antiquewhite");
             if (w) {
               document.getElementById(m).classList.remove("antiquewhite");
             }
