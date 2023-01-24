@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FireworkGame</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        height: 100vh;
+        background: linear-gradient(
+          to right bottom,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          purple
+        );
+      }
+      .gameRule {
+        width: 50vw;
+        height: 75vh;
+        margin: auto;
+        margin-top: 50px;
+        display: block;
+        border-radius: 15px;
+        box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+          rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+      }
+      .gameRule p {
+        margin: 10px 10px;
+        font-size: 16px;
+      }
+      .gameRule h1 {
+        margin: 30px 10px 10px 10px;
+      }
+      .box {
+        width: 50vw;
+        height: 75vh;
+        margin: auto;
+        margin-top: 50px;
+        display: none;
+        background-color: #fff;
+        justify-content: center;
+        flex-wrap: wrap;
+        border-radius: 15px;
+        box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+          rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+      }
+      .box div {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin: 5px 5px;
+        box-shadow: 1px 1px 2px 2px #333, -1px -1px 2px 2px #333;
+      }
+      .firework {
+        width: 50vw;
+        height: 75vh;
+        margin: auto;
+        margin-top: 50px;
+        border-radius: 15px;
+        display: none;
+        box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+          rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+      }
+      .start {
+        width: 50vw;
+        height: 50px;
+        margin: auto;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+      }
+      .start button {
+        width: 150px;
+        height: 50px;
+        background: linear-gradient(
+          to right bottom,
+          rgba(75, 192, 200, 1),
+          rgba(199, 121, 208, 1),
+          rgba(254, 172, 94, 1)
+        );
+        font-size: 30px;
+        font-family: "宋体";
+        border-radius: 10px;
+      }
+      .start button:hover {
+        background: linear-gradient(
+          to right bottom,
+          rgba(75, 192, 200, 0.9),
+          rgba(199, 121, 208, 0.9),
+          rgba(254, 172, 94, 0.9)
+        );
+      }
+      .start button:active {
+        background: linear-gradient(
+          to right bottom,
+          rgba(75, 192, 200, 0.8),
+          rgba(199, 121, 208, 0.8),
+          rgba(254, 172, 94, 0.8)
+        );
+      }
+      .COLOR {
+        width: 50vw;
+        height: 50px;
+        margin: auto;
+        margin-top: 20px;
+        display: none;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .COLOR div {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        box-shadow: 1px 1px 2px 2px #333, -1px -1px 2px 2px #333;
+      }
+      #circles_pink {
+        background-color: pink;
+      }
+      #circles_pink:hover {
+        transform: scale(0.95);
+      }
+      #circles_yellow {
+        background-color: yellow;
+      }
+      #circles_yellow:hover {
+        transform: scale(0.95);
+      }
+      #circles_green {
+        background-color: green;
+      }
+      #circles_green:hover {
+        transform: scale(0.95);
+      }
+      #circles_blue {
+        background-color: blue;
+      }
+      #circles_blue:hover {
+        transform: scale(0.95);
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        border-radius: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="gameRule">
+      <h1>烟花游戏</h1>
+      <p>游戏规则：</p>
+      <p>
+        点击开始游戏后，屏幕上显示不同颜色的圆球，玩家从左到右依次点击对应颜色，点击正确出现对勾提示
+      </p>
+      <p>
+        点击错误出现错误提示，点击正确后点击下一个圆球颜色，直至所有圆球出现对勾提示，游戏结束。
+      </p>
+    </div>
+    <div class="firework">
+      <canvas></canvas>
+    </div>
+    <div class="start">
+      <button>开始游戏</button>
+    </div>
+    <div class="COLOR">
+      <div id="circles_pink" onclick="check(circles_pink,'pink')"></div>
+      <div id="circles_yellow" onclick="check(circles_yellow,'yellow')"></div>
+      <div id="circles_green" onclick="check(circles_green,'green')"></div>
+      <div id="circles_blue" onclick="check(circles_blue,'blue')"></div>
+    </div>
+    <script src="FireworkGame.js"></script>
+    <script>
+      let checkColor = 0;
+      let start = document.querySelector(".start");
+      let start_button = start.querySelector("button");
+      let gameRule = document.querySelector(".gameRule");
+      let firework = document.querySelector(".firework");
+      let gameBox = document.querySelector(".box");
+      let COLOR = document.querySelector(".COLOR");
+      let COLORs = COLOR.querySelectorAll("div");
+      let circles = gameBox.querySelectorAll("div");
+      function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      function randomColor_circle() {
+        let color = getRandomIntInclusive(1, 4);
+        switch (color) {
+          case 1:
+            return "pink";
+          case 2:
+            return "yellow";
+          case 3:
+            return "green";
+          case 4:
+            return "blue";
+        }
+      }
+      start_button.onclick = function () {
+        start.style.display = "none";
+        COLOR.style.display = "flex";
+        gameRule.style.display = "none";
+        gameBox.style.display = "flex";
+        firework.style.display = "none";
+        juge_firework = 0;
+        for (i = 0; i < circles.length; i++) {
+          circles[i].style.backgroundColor = "" + randomColor_circle() + "";
+        }
+        for (i = 0; i < circles.length; i++) {
+          circles[i].style.backgroundImage = "";
+        }
+      };
+      function check(id, color) {
+        if (checkColor == 23) {
+          juge_firework = 1;
+          COLOR.style.display = "none";
+          start.style.display = "flex";
+          gameBox.style.display = "none";
+          firework.style.display = "block";
+          displayFirework();
+        } else {
+          if (circles[checkColor].style.backgroundColor == color) {
+            circles[checkColor].style.backgroundImage = "url(correct.png)";
+            checkColor++;
+          } else {
+            circles[checkColor].style.backgroundImage = "url(error.png)";
+            checkColor = checkColor;
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
