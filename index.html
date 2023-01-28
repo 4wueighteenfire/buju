@@ -99,29 +99,78 @@
         background-color: #555;
         color: white;
       }
+
       .guntiao {
         overflow-y: scroll;
       }
+
       .guntiao::-webkit-scrollbar {
         display: none;
       }
     </style>
     <script>
       let i = 2;
+      let a;
       function displaydate() {
         let x = "";
         let y;
         if (i % 2 == 0) {
-          document.getElementById("date").innerHTML = new Date();
+          every();
           y = "点击关闭时间";
           i = i - 1;
         } else {
+          stop();
           document.getElementById("date").innerHTML = x;
           y = "点击显示时间";
           i = i + 1;
         }
         document.getElementById("xianshi").innerHTML = y;
       }
+      function every() {
+        a = setInterval(function () {
+          document.getElementById("date").innerHTML = getTime();
+        }, 100);
+      }
+      function stop() {
+        clearInterval(a);
+      }
+      function getTime() {
+            let time = new Date();
+            let year = time.getFullYear();
+            let month = time.getMonth() + 1;
+            let day = time.getDate();
+            let hour = time.getHours();
+            hour = hour < 10 ? "0" + hour : hour;
+            let minute = time.getMinutes();
+            minute = minute < 10 ? "0" + minute : minute;
+            let second = time.getSeconds();
+            second = second < 10 ? "0" + second : second;
+            let week = time.getDay();
+            let arr = [
+              "星期日",
+              "星期一",
+              "星期二",
+              "星期三",
+              "星期四",
+              "星期五",
+              "星期六",
+            ];
+            return (
+              year +
+              "年" +
+              month +
+              "月" +
+              day +
+              "日 " +
+              arr[week] +
+              " " +
+              hour +
+              ":" +
+              minute +
+              ":" +
+              second
+            );
+          }
     </script>
   </head>
 
